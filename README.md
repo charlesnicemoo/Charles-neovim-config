@@ -1,2 +1,2 @@
 # Charles-neovim-config
-My neovim configuration
+My neovim configuration requires rg (ripgrep)
