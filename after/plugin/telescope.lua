@@ -1,5 +1,4 @@
 local actions = require('telescope.actions')
-local action_state = require('telescope.actions.state')
 require("telescope").setup({
   defaults = {
     vimgrep_arguments = {
@@ -10,7 +9,8 @@ require("telescope").setup({
       "--line-number",
       "--column",
       "--smart-case",
-      "--hidden", 
+      "--hidden",
+      "--no-ignore"
     },
     mapppings = {
         i = {
