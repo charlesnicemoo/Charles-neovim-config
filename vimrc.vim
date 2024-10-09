@@ -24,5 +24,6 @@ set tabstop=4
 set shiftwidth=4
 set expandtab
 set splitright
+let g:netrw_liststyle=3
 " These is to start javacomplete2 use <C-x><C-o> to start the complete
 autocmd FileType java setlocal omnifunc=javacomplete#Complete

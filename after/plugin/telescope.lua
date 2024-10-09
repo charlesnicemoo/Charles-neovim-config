@@ -9,8 +9,8 @@ require("telescope").setup({
       "--line-number",
       "--column",
       "--smart-case",
-      "--hidden",
-      "--no-ignore"
+--      "--hidden",
+--      "--no-ignore"
     },
     mapppings = {
         i = {
