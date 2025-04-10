@@ -1,5 +1,5 @@
 " This is my old vim config that I cannot be bothered to convert to lua. 
-" It also has the benefet of being more portable to normal vim.
+" It also has the benefit of being more portable to normal vim.
 let mapleader = " "
 syntax off " Syntax off for LSP syntax highlights
 set guicursor=
