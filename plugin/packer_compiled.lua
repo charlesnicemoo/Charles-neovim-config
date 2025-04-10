@@ -124,10 +124,10 @@ _G.packer_plugins = {
     path = "/Users/charlesnice/.local/share/nvim/site/pack/packer/start/plenary.nvim",
     url = "https://github.com/nvim-lua/plenary.nvim"
   },
-  ["telescope.nvim"] = {
+  ["vim-javacomplete2"] = {
     loaded = true,
-    path = "/Users/charlesnice/.local/share/nvim/site/pack/packer/start/telescope.nvim",
-    url = "https://github.com/nvim-telescope/telescope.nvim"
+    path = "/Users/charlesnice/.local/share/nvim/site/pack/packer/start/vim-javacomplete2",
+    url = "https://github.com/artur-shaik/vim-javacomplete2"
   }
 }
 
