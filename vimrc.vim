@@ -1,5 +1,5 @@
 " This is my old vim config that I cannot be bothered to convert to lua. 
-" It also has the benefit of being more portable to normal vim.
+" It also has the benefet of being more portable to normal vim.
 let mapleader = " "
 syntax off " Syntax off for LSP syntax highlights
 set guicursor=
@@ -35,9 +35,11 @@ autocmd FileType netrw setlocal relativenumber
 " These is to start javacomplete2 use <C-x><C-o> to start the complete
 autocmd FileType java setlocal omnifunc=javacomplete#Complete
 " Set grep default options case insensitive, ignore binary and node_modules files
-set grepprg=grep\ -nriI\ --exclude-dir={\"node_modules\",\"build\",\"target\"}
+set grepprg=grep\ -nriI\ --exclude-dir={\"node_modules\",\"build\",\"target\",\"coverage\",\".git\"}
 nnoremap <leader>n :cnext<CR>zz
 nnoremap <leader>b :cprev<CR>zz
 nnoremap <leader>c :copen<CR>
-nnoremap <leader>x :cclose<CR>
+nnoremap <leader>v :cnewer<CR>
+nnoremap <leader>x :colder<CR>
 nnoremap n nzz
+nnoremap gd gdzz
