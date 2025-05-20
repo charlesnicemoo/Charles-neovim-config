@@ -21,13 +21,31 @@ augroup TerminalLineNumbers
     autocmd!
     autocmd TermOpen * setlocal nonumber norelativenumber
 augroup END
+function! GetGitBranch()
+  if &buftype == 'terminal'
+    return ''
+  endif
+  let l:current_dir = getcwd() " Store current working directory
+  let l:buffer_path = expand('%:p') " Get full path of current buffer
+  let l:file_dir = expand('%:p:h') " Get directory of current buffer
+  if l:buffer_path == '' || l:buffer_path =~# 'help\%(.\{-}\)\?\.txt$' || l:file_dir == ''
+    return ''
+  endif
+  exec 'cd ' . fnameescape(l:file_dir)
+  let l:branch = system('git rev-parse --abbrev-ref HEAD 2>/dev/null')
+  exec 'cd ' . fnameescape(l:current_dir)
+  let l:branch = substitute(l:branch, '\n$', '', '')
+  if v:shell_error == 0 && l:branch != 'HEAD' && l:branch != ''
+    return '  ' . l:branch
+  else
+    return ''
+  endif
+endfunction
 set laststatus=2
-set statusline+=%F
-set statusline+=%{&modified?'[+]':''}
-set statusline+=%=%-14.(%l,%c%V%)
+set statusline+=%F%{&modified?'[+]':''}%{GetGitBranch()}%=%-14.(%l,%c%V%)
 set colorcolumn=120
-set tabstop=4
-set shiftwidth=4
+set tabstop=2
+set shiftwidth=2
 set expandtab
 set splitright
 let g:netrw_liststyle=3
@@ -36,10 +54,11 @@ autocmd FileType netrw setlocal relativenumber
 autocmd FileType java setlocal omnifunc=javacomplete#Complete
 " Set grep default options case insensitive, ignore binary and node_modules files
 set grepprg=grep\ -nriI\ --exclude-dir={\"node_modules\",\"build\",\"target\",\"coverage\",\".git\"}
-nnoremap <leader>n :cnext<CR>zz
-nnoremap <leader>b :cprev<CR>zz
+nnoremap <leader>j :cnext<CR>zz
+nnoremap <leader>k :cprev<CR>zz
 nnoremap <leader>c :copen<CR>
 nnoremap <leader>v :cnewer<CR>
 nnoremap <leader>x :colder<CR>
 nnoremap n nzz
+nnoremap N nzz
 nnoremap gd gdzz
