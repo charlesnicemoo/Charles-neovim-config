@@ -36,7 +36,7 @@ function! GetGitBranch()
   exec 'cd ' . fnameescape(l:current_dir)
   let l:branch = substitute(l:branch, '\n$', '', '')
   if v:shell_error == 0 && l:branch != 'HEAD' && l:branch != ''
-    return '  ' . l:branch
+    return ' ' . l:branch
   else
     return ''
   endif
