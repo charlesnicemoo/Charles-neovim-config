@@ -50,7 +50,6 @@ set colorcolumn=120
 set tabstop=2
 set shiftwidth=2
 set expandtab
-set splitright
 let g:netrw_liststyle=3
 autocmd FileType netrw setlocal relativenumber
 " These is to start javacomplete2 use <C-x><C-o> to start the complete
