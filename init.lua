@@ -12,8 +12,8 @@ vim.lsp.config('lua_ls', {
     if client.workspace_folders then
       local path = client.workspace_folders[1].name
       if
-        path ~= vim.fn.stdpath('config')
-        and (vim.uv.fs_stat(path .. '/.luarc.json') or vim.uv.fs_stat(path .. '/.luarc.jsonc'))
+          path ~= vim.fn.stdpath('config')
+          and (vim.uv.fs_stat(path .. '/.luarc.json') or vim.uv.fs_stat(path .. '/.luarc.jsonc'))
       then
         return
       end
@@ -46,7 +46,7 @@ vim.lsp.config('ts_ls', {
       {
         name = "@vue/typescript-plugin",
         location = "/usr/local/lib/node_modules/@vue/typescript-plugin",
-        languages = {"javascript", "typescript", "vue"},
+        languages = { "javascript", "typescript", "vue" },
       },
     },
   },
@@ -57,6 +57,25 @@ vim.lsp.config('ts_ls', {
   },
 })
 vim.lsp.enable('ts_ls')
+vim.api.nvim_create_autocmd("LspAttach", {
+  callback = function(ev)
+    local client = vim.lsp.get_client_by_id(ev.data.client_id)
+    if client:supports_method("textDocument/completion") then
+      client.server_capabilities.completionProvider.triggerCharacters = {
+        '.'
+      }
+      vim.lsp.completion.enable(true, client.id, ev.buf, { autotrigger = true })
+    end
+    if client:supports_method("textDocument/formatting") then
+      vim.api.nvim_create_autocmd("BufWritePre", {
+        buffer = ev.buf,
+        callback = function()
+          vim.lsp.buf.format({ bufnr = ev.buf, id = client.id, timeout_ms = 1000 })
+        end,
+      })
+    end
+  end,
+})
 vim.diagnostic.config({
   virtual_text = true,
   update_in_insert = false,
@@ -65,12 +84,11 @@ vim.diagnostic.config({
     focusable = false,
     style = 'minimal',
     border = 'single',
---    source = 'always',
     header = '',
     prefix = '',
   },
   signs = {
-    enable = true, -- Enable signs in the sign column
+    enable = true,
     text = {
       [vim.diagnostic.severity.ERROR] = "E",
       [vim.diagnostic.severity.WARN]  = "W",
