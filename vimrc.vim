@@ -53,11 +53,13 @@ set expandtab
 let g:netrw_liststyle=3
 autocmd FileType netrw setlocal relativenumber
 " These is to start javacomplete2 use <C-x><C-o> to start the complete
-autocmd FileType java setlocal omnifunc=javacomplete#Complete
+" autocmd FileType java setlocal omnifunc=javacomplete#Complete
 " Set grep default options case insensitive, ignore binary and node_modules files
 set grepprg=grep\ -nriI\ --exclude-dir={\"node_modules\",\"build\",\"target\",\"coverage\",\".git\"}
-nnoremap <leader>j :cnext<CR>zz
-nnoremap <leader>k :cprev<CR>zz
+" Note that since nvim 0.11 [q and and ]q move you though copen quickfix list
+" Also [l ]l work similarly for lopen location list
+" nnoremap <leader>j :cnext<CR>zz
+" nnoremap <leader>k :cprev<CR>zz
 nnoremap <leader>c :copen<CR>
 nnoremap <leader>v :cnewer<CR>
 nnoremap <leader>x :colder<CR>

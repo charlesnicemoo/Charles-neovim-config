@@ -2,6 +2,7 @@ local vimrc = vim.fn.stdpath("config") .. "/vimrc.vim"
 vim.cmd.source(vimrc)
 vim.cmd [[colorscheme vim]]
 vim.api.nvim_del_user_command("EditQuery")
+-- lua vim.cmd.edit(vim.lsp.get_log_path()) is a useful command to see your LSP debug log
 vim.lsp.set_log_level('debug')
 vim.lsp.config('lua_ls', {
   cmd = { 'lua-language-server' },
@@ -56,6 +57,12 @@ vim.lsp.config('ts_ls', {
     "vue",
   },
 })
+vim.lsp.config('clangd', {
+  cmd = { 'clangd', '--background-index', '--clang-tidy', '--log=verbose' },
+  root_markers = { ".clangd", ".clang-tidy", ".clang-format", "compile_commands.json", "compile_flags.txt", "configure.ac", ".git" },
+  filetypes = { "c", "cpp", "cuda" }
+})
+vim.lsp.enable('clangd')
 vim.lsp.enable('ts_ls')
 vim.api.nvim_create_autocmd("LspAttach", {
   callback = function(ev)
@@ -65,14 +72,6 @@ vim.api.nvim_create_autocmd("LspAttach", {
         '.'
       }
       vim.lsp.completion.enable(true, client.id, ev.buf, { autotrigger = true })
-    end
-    if client:supports_method("textDocument/formatting") then
-      vim.api.nvim_create_autocmd("BufWritePre", {
-        buffer = ev.buf,
-        callback = function()
-          vim.lsp.buf.format({ bufnr = ev.buf, id = client.id, timeout_ms = 1000 })
-        end,
-      })
     end
   end,
 })
@@ -97,9 +96,8 @@ vim.diagnostic.config({
     },
   },
 })
+-- See https://neovim.io/doc/user/news-0.11.html for nice update on some new default keys 
 vim.opt.signcolumn = 'auto'
-vim.keymap.set('n', '[d', vim.diagnostic.goto_prev, { desc = 'Go to previous diagnostic' })
-vim.keymap.set('n', ']d', vim.diagnostic.goto_next, { desc = 'Go to next diagnostic' })
 vim.keymap.set('n', '<leader>vd', vim.diagnostic.open_float, { desc = 'Open diagnostic float' })
 vim.keymap.set('n', '<leader>vl', vim.diagnostic.setloclist, { desc = 'Set diagnostics to loclist' })
 vim.keymap.set("n", "gd", function() vim.lsp.buf.definition() end, opts)
