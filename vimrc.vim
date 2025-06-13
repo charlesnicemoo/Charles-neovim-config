@@ -5,7 +5,6 @@ syntax off " Syntax off to prevent conflict with LSP syntax highlights
 set guicursor=
 set nowrap
 set scrolloff=5
-" set spell
 inoremap <CR> <CR><C-o>zH<C-o>zH
 set number
 set completeopt-=preview
@@ -44,6 +43,10 @@ augroup numbertoggle
   autocmd BufLeave,FocusLost,InsertEnter,WinLeave   * if &nu                  | set nornu | endif 
   autocmd TermOpen * setlocal nonumber norelativenumber
 augroup END
+augroup MarkdownWrapAndBreak
+  autocmd!
+  autocmd FileType markdown,text,tex setlocal wrap linebreak spell
+augroup END
 set laststatus=2
 set statusline+=%F%{&modified?'[+]':''}%{StatuslineGitBranch()}%=%-14.(%l,%c%V%)
 set colorcolumn=120
@@ -64,5 +67,5 @@ nnoremap <leader>c :copen<CR>
 nnoremap <leader>v :cnewer<CR>
 nnoremap <leader>x :colder<CR>
 nnoremap n nzz
-nnoremap N nzz
+nnoremap N Nzz
 nnoremap gd gdzz
