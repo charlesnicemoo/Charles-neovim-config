@@ -72,6 +72,7 @@ vim.lsp.enable("clangd")
 vim.lsp.enable("jdtls")
 vim.api.nvim_create_autocmd("LspAttach", {
   callback = function(ev)
+    -- remap gd here on the LSP attach, means default gd will be used when no lsp is attached
     vim.keymap.set("n", "gd", function() vim.lsp.buf.definition() end, opts)
     local client = vim.lsp.get_client_by_id(ev.data.client_id)
     if client:supports_method("textDocument/completion") then
