@@ -57,6 +57,7 @@ let g:netrw_liststyle=3
 autocmd FileType netrw setlocal relativenumber
 " Set grep default options case insensitive, ignore binary and node_modules files
 set grepprg=grep\ -nriI\ --exclude-dir={\"node_modules\",\"build\",\"target\",\"coverage\",\".git\"}
+cabbrev gr grep
 " Note that since nvim 0.11 [q and and ]q move you though copen quickfix list
 " Also [l ]l work similarly for lopen location list
 " nnoremap <leader>j :cnext<CR>zz
