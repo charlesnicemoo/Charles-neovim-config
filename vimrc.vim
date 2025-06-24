@@ -47,6 +47,7 @@ augroup MarkdownWrapAndBreak
   autocmd!
   autocmd FileType markdown,text,tex setlocal wrap linebreak spell
 augroup END
+autocmd FileType netrw setlocal nospell
 set laststatus=2
 set statusline+=%F%{&modified?'[+]':''}%{StatuslineGitBranch()}%=%-14.(%l,%c%V%)
 set colorcolumn=120
