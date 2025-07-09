@@ -65,6 +65,8 @@ cabbrev rg grep
 cabbrev gep grep
 cabbrev ger grep
 cabbrev gre grep
+cabbrev erp grep
+cabbrev rep grep
 cabbrev gerp grep
 cabbrev gpre grep
 cabbrev perg grep
@@ -81,3 +83,5 @@ nnoremap <leader>x :colder<CR>
 nnoremap n nzz
 nnoremap N Nzz
 nnoremap gd gdzz
+command -nargs=1 -complete=file FF
+  \ cgetexpr system('find . \( -path "./node_modules" -o -path "./.git" \) -prune -o -type f -iname ' . shellescape(<f-args>) . ' 2>/dev/null') | copen
