@@ -8,9 +8,6 @@ set scrolloff=5
 inoremap <CR> <CR><C-o>zH<C-o>zH
 set number
 set completeopt-=preview
-" set wrap " line wrap is on when uncommented to undo you can use set nowrap
-" set linebreak " when line wrap is set use this to prevent words from being split up
-" set spell " sets spellcheck when uncommented
 function! GitDetectBranchAndSetBufferVar()
   let b:git_branch = ''
   if &buftype == 'terminal'
