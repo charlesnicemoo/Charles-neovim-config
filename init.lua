@@ -68,10 +68,11 @@ vim.lsp.config("jdtls", {
   root_markers = { ".git", "build.gradle", "build.gradle.kts", "build.xml", "pom.xml", "settings.gradle", "settings.gradle.kts" },
   filetypes = { "java"}
 })
-vim.lsp.enable("lua_ls")
-vim.lsp.enable("ts_ls")
-vim.lsp.enable("clangd")
-vim.lsp.enable("jdtls")
+-- vim.lsp.enable("lua_ls")
+-- vim.lsp.enable("ts_ls")
+-- vim.lsp.enable("clangd")
+-- vim.lsp.enable("jdtls")
+vim.lsp.enable({"lua_ls","ts_ls","clangd","jdtls"})
 vim.api.nvim_create_autocmd("LspAttach", {
   callback = function(ev)
     -- remap gd here on the LSP attach, means default gd will be used when no lsp is attached
@@ -108,5 +109,5 @@ vim.diagnostic.config({
 })
 -- See https://neovim.io/doc/user/news-0.11.html for nice update on some new default keys 
 vim.opt.signcolumn = "auto"
-vim.keymap.set("n", "<leader>vd", vim.diagnostic.open_float, { desc = "Open diagnostic float" })
+-- <C-w>d is defaut open diagnostic float
 vim.keymap.set("n", "<leader>vl", vim.diagnostic.setloclist, { desc = "Set diagnostics to loclist" })
