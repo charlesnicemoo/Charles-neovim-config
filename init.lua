@@ -68,10 +68,6 @@ vim.lsp.config("jdtls", {
   root_markers = { ".git", "build.gradle", "build.gradle.kts", "build.xml", "pom.xml", "settings.gradle", "settings.gradle.kts" },
   filetypes = { "java"}
 })
--- vim.lsp.enable("lua_ls")
--- vim.lsp.enable("ts_ls")
--- vim.lsp.enable("clangd")
--- vim.lsp.enable("jdtls")
 vim.lsp.enable({"lua_ls","ts_ls","clangd","jdtls"})
 vim.api.nvim_create_autocmd("LspAttach", {
   callback = function(ev)
