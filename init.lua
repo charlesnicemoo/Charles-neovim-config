@@ -69,19 +69,19 @@ vim.lsp.config("jdtls", {
   filetypes = { "java"}
 })
 vim.lsp.enable({"lua_ls","ts_ls","clangd","jdtls"})
-vim.api.nvim_create_autocmd("LspAttach", {
-  callback = function(ev)
-    -- remap gd here on the LSP attach, means default gd will be used when no lsp is attached
-    vim.keymap.set("n", "gd", function() vim.lsp.buf.definition() end, opts)
-    local client = vim.lsp.get_client_by_id(ev.data.client_id)
-    if client:supports_method("textDocument/completion") then
-      client.server_capabilities.completionProvider.triggerCharacters = {
-        ".",":"
-      }
-      vim.lsp.completion.enable(true, client.id, ev.buf, { autotrigger = true })
-    end
-  end,
-})
+  vim.api.nvim_create_autocmd("LspAttach", {
+    callback = function(ev)
+      -- remap gd here on the LSP attach, means default gd will be used when no lsp is attached
+      vim.keymap.set("n", "gd", function() vim.lsp.buf.definition() end, opts)
+--      local client = vim.lsp.get_client_by_id(ev.data.client_id)
+--      if client:supports_method("textDocument/completion") then
+--        client.server_capabilities.completionProvider.triggerCharacters = {
+--          ".",":"
+--        }
+--        vim.lsp.completion.enable(true, client.id, ev.buf, { autotrigger = true })
+--      end
+    end,
+  })
 vim.diagnostic.config({
   virtual_text = true,
   update_in_insert = false,

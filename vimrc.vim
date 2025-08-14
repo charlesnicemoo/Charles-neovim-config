@@ -54,7 +54,7 @@ set expandtab
 let g:netrw_liststyle=3
 autocmd FileType netrw setlocal relativenumber
 " Set grep default options case insensitive, ignore binary and node_modules files
-set grepprg=grep\ -nriI\ --exclude-dir={\"node_modules\",\"build\",\"target\",\"coverage\",\".git\"}
+set grepprg=grep\ -nriI\ --exclude-dir={\"node_modules\",\"build\",\"target\",\"coverage\",\".git\",\".turbo\"}
 cabbrev gr grep
 cabbrev gp grep
 cabbrev ge grep
@@ -81,4 +81,4 @@ nnoremap n nzz
 nnoremap N Nzz
 nnoremap gd gdzz
 command -nargs=1 -complete=file FF
-  \ cgetexpr system('find . \( -path "./node_modules" -o -path "./.git" \) -prune -o -type f -iname ' . shellescape(<f-args>) . ' 2>/dev/null') | copen
+  \ cgetexpr system('find . -type d \( -name "node_modules" -o -name ".git" \) -prune -o -type f -iname \*'.shellescape(<f-args>).'\* -print 2>/dev/null') | copen
