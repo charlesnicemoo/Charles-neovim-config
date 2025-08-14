@@ -54,7 +54,7 @@ set expandtab
 let g:netrw_liststyle=3
 autocmd FileType netrw setlocal relativenumber
 " Set grep default options case insensitive, ignore binary and node_modules files
-set grepprg=grep\ -nriI\ --exclude-dir={\"node_modules\",\"build\",\"target\",\"coverage\",\".git\",\".turbo\"}
+set grepprg=grep\ -nriI\ --exclude-dir={\"node_modules\",\"build\",\"target\",\"coverage\",\".git\",\".turbo\",\".next\"}
 cabbrev gr grep
 cabbrev gp grep
 cabbrev ge grep
@@ -80,5 +80,16 @@ nnoremap <leader>x :colder<CR>
 nnoremap n nzz
 nnoremap N Nzz
 nnoremap gd gdzz
-command -nargs=1 -complete=file FF
-  \ cgetexpr system('find . -type d \( -name "node_modules" -o -name ".git" \) -prune -o -type f -iname \*'.shellescape(<f-args>).'\* -print 2>/dev/null') | copen
+function! FF(search_term)
+  let l:filelist = split(system('find . -type d \( -name "node_modules" -o -name ".git" \) -prune -o -type f -iname \*'.shellescape(a:search_term).'\* -print 2>/dev/null'), "\n")
+  let l:qflist = []
+  for l:file in l:filelist
+    if !empty(l:file)
+      call add(l:qflist, {'filename': fnamemodify(l:file, ':p')})
+    endif
+  endfor
+  call setqflist(l:qflist)
+  copen
+  cfirst
+endfunction
+command! -nargs=1 -complete=file FF call FF(<f-args>)
