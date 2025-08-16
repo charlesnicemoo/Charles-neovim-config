@@ -81,14 +81,14 @@ nnoremap n nzz
 nnoremap N Nzz
 nnoremap gd gdzz
 function! FF(search_term)
-  let l:filelist = split(system('find . -type d \( -name "node_modules" -o -name ".git" \) -prune -o -type f -iname \*'.shellescape(a:search_term).'\* -print 2>/dev/null'), "\n")
+  let l:filelist = split(system('find . -type d \( -name "node_modules" -o -name ".git" -o -name ".turbo" -o -name ".next" \) -prune -o -type f -iname \*'.shellescape(a:search_term).'\* -print 2>/dev/null'), "\n")
   let l:qflist = []
   for l:file in l:filelist
     if !empty(l:file)
       call add(l:qflist, {'filename': fnamemodify(l:file, ':p')})
     endif
   endfor
-  call setqflist(l:qflist)
+  call setqflist([] , ' ', {'title': 'FF ' . a:search_term, 'items': l:qflist})
   copen
   cfirst
 endfunction
