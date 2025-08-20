@@ -1,13 +1,5 @@
 " This is my old vim config that I cannot be bothered to convert to lua. 
 " It also has the benefit of being more portable to normal vim.
-let mapleader = " "
-syntax off " Syntax off to prevent conflict with LSP syntax highlights
-set guicursor=
-set nowrap
-set scrolloff=5
-inoremap <CR> <CR><C-o>zH<C-o>zH
-set number
-set completeopt-=preview
 function! GitDetectBranchAndSetBufferVar()
   let b:git_branch = ''
   if &buftype == 'terminal'
@@ -45,6 +37,13 @@ augroup MarkdownWrapAndBreak
   autocmd FileType markdown,text,tex setlocal wrap linebreak spell
 augroup END
 autocmd FileType netrw setlocal nospell
+autocmd FileType netrw setlocal relativenumber
+let mapleader = " "
+syntax off " Syntax off to prevent conflict with LSP syntax highlights
+set guicursor=
+set nowrap
+set scrolloff=5
+set number
 set laststatus=2
 set statusline+=%F%{&modified?'[+]':''}%{StatuslineGitBranch()}%=%-14.(%l,%c%V%)
 set colorcolumn=120
@@ -52,7 +51,7 @@ set tabstop=2
 set shiftwidth=2
 set expandtab
 let g:netrw_liststyle=3
-autocmd FileType netrw setlocal relativenumber
+set completeopt-=preview
 " Set grep default options case insensitive, ignore binary and node_modules files
 set grepprg=grep\ -nriI\ --exclude-dir={\"node_modules\",\"build\",\"target\",\"coverage\",\".git\",\".turbo\",\".next\"}
 cabbrev gr grep
@@ -80,6 +79,9 @@ nnoremap <leader>x :colder<CR>
 nnoremap n nzz
 nnoremap N Nzz
 nnoremap gd gdzz
+nnoremap <C-d> <C-d>zz
+nnoremap <C-u> <C-u>zz
+inoremap <CR> <CR><C-o>zH<C-o>zH
 function! FF(search_term)
   let l:filelist = split(system('find . -type d \( -name "node_modules" -o -name ".git" -o -name ".turbo" -o -name ".next" \) -prune -o -type f -iname \*'.shellescape(a:search_term).'\* -print 2>/dev/null'), "\n")
   let l:qflist = []

@@ -3,7 +3,7 @@ vim.cmd.source(vimrc)
 vim.cmd [[colorscheme vim]]
 vim.api.nvim_del_user_command("EditQuery")
 -- lua vim.cmd.edit(vim.lsp.get_log_path()) is a useful command to see your LSP debug log
-vim.lsp.set_log_level("debug")
+-- vim.lsp.set_log_level("debug")
 vim.lsp.config("lua_ls", {
   cmd = { "lua-language-server" },
   filetypes = {
@@ -13,8 +13,8 @@ vim.lsp.config("lua_ls", {
     if client.workspace_folders then
       local path = client.workspace_folders[1].name
       if
-          path ~= vim.fn.stdpath("config")
-          and (vim.uv.fs_stat(path .. "/.luarc.json") or vim.uv.fs_stat(path .. "/.luarc.jsonc"))
+        path ~= vim.fn.stdpath("config")
+        and (vim.uv.fs_stat(path .. "/.luarc.json") or vim.uv.fs_stat(path .. "/.luarc.jsonc"))
       then
         return
       end
@@ -69,19 +69,19 @@ vim.lsp.config("jdtls", {
   filetypes = { "java"}
 })
 vim.lsp.enable({"lua_ls","ts_ls","clangd","jdtls"})
-  vim.api.nvim_create_autocmd("LspAttach", {
-    callback = function(ev)
-      -- remap gd here on the LSP attach, means default gd will be used when no lsp is attached
-      vim.keymap.set("n", "gd", function() vim.lsp.buf.definition() end, opts)
---      local client = vim.lsp.get_client_by_id(ev.data.client_id)
---      if client:supports_method("textDocument/completion") then
---        client.server_capabilities.completionProvider.triggerCharacters = {
---          ".",":"
---        }
---        vim.lsp.completion.enable(true, client.id, ev.buf, { autotrigger = true })
---      end
-    end,
-  })
+vim.api.nvim_create_autocmd("LspAttach", {
+  callback = function(args)
+    local bufnr = args.buf
+    vim.keymap.set("n", "gd", function()
+      vim.lsp.buf.definition()
+      vim.cmd("normal! zz")
+    end, {
+      buffer = bufnr,
+      desc = "Go to Definition and Center View",
+      silent = true,
+    })
+  end,
+})
 vim.diagnostic.config({
   virtual_text = true,
   update_in_insert = false,
