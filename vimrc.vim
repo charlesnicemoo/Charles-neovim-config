@@ -37,11 +37,7 @@ augroup MarkdownWrapAndBreak
   autocmd FileType markdown,text,tex setlocal wrap linebreak spell
 augroup END
 " Below needs reworking but I now think it now works as intended
-autocmd FileType netrw setlocal nospell | setlocal relativenumber | let g:netrw_altv=1
-autocmd BufEnter,FocusGained,WinEnter netrw let g:netrw_altv=1
-autocmd BufLeave,FocusLost,WinLeave netrw let g:netrw_altv=0
-autocmd BufEnter,FocusGained,WinEnter,InsertEnter * if &filetype !=# 'netrw' | let g:netrw_altv = 0 | endif
-autocmd BufEnter * if &filetype ==# 'netrw' | let g:netrw_altv = 1 | endif
+autocmd FileType netrw setlocal nospell | setlocal relativenumber 
 let mapleader = " "
 syntax off " Syntax off to prevent conflict with LSP syntax highlights
 set guicursor=
@@ -55,6 +51,8 @@ set tabstop=2
 set shiftwidth=2
 set expandtab
 let g:netrw_liststyle=3
+" use Lexplore (Le/Lex) to toggle left explorer
+set splitright
 set completeopt-=preview
 set path+=**
 " Set grep default options case insensitive, ignore binary and node_modules files
@@ -81,6 +79,8 @@ cabbrev regr grep
 nnoremap <leader>c :copen<CR>
 nnoremap <leader>v :cnewer<CR>
 nnoremap <leader>x :colder<CR>
+nnoremap <leader>n :bnext<CR>
+nnoremap <leader>b :bprevious<CR>
 nnoremap n nzz
 nnoremap N Nzz
 nnoremap gd gdzz
