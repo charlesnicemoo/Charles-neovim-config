@@ -64,6 +64,7 @@ cabbrev rg grep
 cabbrev gep grep
 cabbrev ger grep
 cabbrev gre grep
+cabbrev grp grep
 cabbrev erp grep
 cabbrev rep grep
 cabbrev gerp grep
