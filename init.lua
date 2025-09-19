@@ -87,7 +87,7 @@ vim.diagnostic.config({
   update_in_insert = false,
   severity_sort = true,
   float = {
-    -- <C-w>d to open the window and <C-w> to move focus to the diagnostic window.
+    -- <C-w>d to open the window and <C-w>/<C-w>d to move focus to the diagnostic window.
     focusable = true,
     style = "minimal",
     border = "single",
