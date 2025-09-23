@@ -50,7 +50,9 @@ set colorcolumn=120
 set tabstop=2
 set shiftwidth=2
 set expandtab
-let g:netrw_liststyle=3
+let g:netrw_banner = 0
+let g:netrw_keepdir = 0
+" let g:netrw_liststyle=3
 " use Lexplore (Le/Lex) to toggle left explorer
 set splitright
 set completeopt-=preview
