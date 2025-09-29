@@ -58,7 +58,8 @@ set splitright
 set completeopt-=preview
 set path+=**
 " Set grep default options case insensitive, ignore binary and node_modules files
-set grepprg=grep\ -nriI\ --exclude-dir={\"node_modules\",\"build\",\"target\",\"coverage\",\".git\",\".turbo\",\".next\"}
+" set grepprg=grep\ -nriI\ --exclude-dir={\"node_modules\",\"build\",\"target\",\"coverage\",\".git\",\".turbo\",\".next\"}
+set grepprg=grep\ -nriI\ --exclude-dir={\"node_modules\",\"target\",\"coverage\",\".git\",\".turbo\",\".next\"}
 cabbrev gr grep
 cabbrev gp grep
 cabbrev ge grep
@@ -82,8 +83,9 @@ cabbrev regr grep
 nnoremap <leader>c :copen<CR>
 nnoremap <leader>v :cnewer<CR>
 nnoremap <leader>x :colder<CR>
-nnoremap <leader>n :bnext<CR>
-nnoremap <leader>b :bprevious<CR>
+" [b ]b does this now
+" nnoremap <leader>n :bnext<CR>
+" nnoremap <leader>b :bprevious<CR>
 nnoremap n nzz
 nnoremap N Nzz
 nnoremap gd gdzz
