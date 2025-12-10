@@ -51,41 +51,42 @@ set tabstop=2
 set shiftwidth=2
 set expandtab
 let g:netrw_banner = 0
-" let g:netrw_keepdir = 0
-" let g:netrw_liststyle=3
-" use Lexplore (Le/Lex) to toggle left explorer
 set splitright
-set completeopt-=preview
 set path+=**
-" Set grep default options case insensitive, ignore binary and node_modules files
+set wildmenu
+set wildignore+=*/node_modules/*,*/.git/*,*/dist/*,*/.next/*,*/.turbo/*,*/target/*,*/coverage/*
+" This is my old grep config but it it not portable.
 " set grepprg=grep\ -nriI\ --exclude-dir={\"node_modules\",\"build\",\"target\",\"coverage\",\".git\",\".turbo\",\".next\"}
-set grepprg=grep\ -nriI\ --exclude-dir={\"node_modules\",\"target\",\"coverage\",\".git\",\".turbo\",\".next\"}
-cabbrev gr grep
-cabbrev gp grep
-cabbrev ge grep
-cabbrev rg grep
-cabbrev gep grep
-cabbrev ger grep
-cabbrev gre grep
-cabbrev grp grep
-cabbrev erp grep
-cabbrev rep grep
-cabbrev gerp grep
-cabbrev gpre grep
-cabbrev perg grep
-cabbrev rpeg grep
-cabbrev regp grep
-cabbrev regr grep
-" Note that since nvim 0.11 [q and and ]q move you though copen quickfix list
+" Now use vimgrep instead. If need to really search all stuff (POSIX compliant) use something like: 
+" find . -type f -print | xargs grep -n "your_search_pattern"
+cabbrev vimgr vimgrep
+cabbrev vmgrp vimgrep
+cabbrev vmgr vimgrep
+cabbrev vgr vimgrep
+cabbrev vgp vimgrep
+cabbrev vg vimgrep
+cabbrev gr vimgrep
+cabbrev gp vimgrep
+cabbrev ge vimgrep
+cabbrev rg vimgrep
+cabbrev gep vimgrep
+cabbrev ger vimgrep
+cabbrev gre vimgrep
+cabbrev grp vimgrep
+cabbrev erp vimgrep
+cabbrev rep vimgrep
+cabbrev gerp vimgrep
+cabbrev gpre vimgrep
+cabbrev perg vimgrep
+cabbrev rpeg vimgrep
+cabbrev regp vimgrep
+cabbrev regr vimgrep
+" Note that since nvim 0.11.0 [q and and ]q move you though copen quickfix list
 " Also [l ]l work similarly for lopen location list
-" nnoremap <leader>j :cnext<CR>zz
-" nnoremap <leader>k :cprev<CR>zz
+" Also [b ]b works similarly but for buffer list
 nnoremap <leader>c :copen<CR>
 nnoremap <leader>v :cnewer<CR>
 nnoremap <leader>x :colder<CR>
-" [b ]b does this now
-" nnoremap <leader>n :bnext<CR>
-" nnoremap <leader>b :bprevious<CR>
 nnoremap n nzz
 nnoremap N Nzz
 nnoremap gd gdzz
