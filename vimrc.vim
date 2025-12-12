@@ -54,33 +54,18 @@ let g:netrw_banner = 0
 set splitright
 set path+=**
 set wildmenu
-set wildignore+=*/node_modules/*,*/.git/*,*/dist/*,*/.next/*,*/.turbo/*,*/target/*,*/coverage/*
-" This is my old grep config but it it not portable.
-" set grepprg=grep\ -nriI\ --exclude-dir={\"node_modules\",\"build\",\"target\",\"coverage\",\".git\",\".turbo\",\".next\"}
-" Now use vimgrep instead. If need to really search all stuff (POSIX compliant) use something like: 
+set wildignore+=*/node_modules/*,*/.git/*,*/dist/*,*/.next/*,*/.turbo/*,*/target/*,*/coverage/*,*.DS_Store
+set grepprg=rg\ -g\ \'!node_modules'\ -g\ \'!.git\'\ -g\ \'!dist/\'\ -g\ \'!.next\'\ -g\ \'!.turbo/\'\ -g\ \'!target\'\ -g\ \'!coverage\'\ --vimgrep\ -uuu\ --no-binary\ --ignore-case
+" If need to really search all stuff (POSIX compliant all dirs) use something like: 
 " find . -type f -print | xargs grep -n "your_search_pattern"
 cabbrev vimgr vimgrep
 cabbrev vmgrp vimgrep
+cabbrev vgrp vimgrep
 cabbrev vmgr vimgrep
 cabbrev vgr vimgrep
 cabbrev vgp vimgrep
 cabbrev vg vimgrep
-cabbrev gr vimgrep
-cabbrev gp vimgrep
-cabbrev ge vimgrep
-cabbrev rg vimgrep
-cabbrev gep vimgrep
-cabbrev ger vimgrep
-cabbrev gre vimgrep
-cabbrev grp vimgrep
-cabbrev erp vimgrep
-cabbrev rep vimgrep
-cabbrev gerp vimgrep
-cabbrev gpre vimgrep
-cabbrev perg vimgrep
-cabbrev rpeg vimgrep
-cabbrev regp vimgrep
-cabbrev regr vimgrep
+cabbrev rg grep
 " Note that since nvim 0.11.0 [q and and ]q move you though copen quickfix list
 " Also [l ]l work similarly for lopen location list
 " Also [b ]b works similarly but for buffer list
