@@ -66,12 +66,15 @@ cabbrev vgr vimgrep
 cabbrev vgp vimgrep
 cabbrev vg vimgrep
 cabbrev rg grep
+cabbrev lrg lgrep
 " Note that since nvim 0.11.0 [q and and ]q move you though copen quickfix list
 " Also [l ]l work similarly for lopen location list
 " Also [b ]b works similarly but for buffer list
+" Also [d ]d works similarly but for diagnistics
 nnoremap <leader>c :copen<CR>
-nnoremap <leader>v :cnewer<CR>
+nnoremap <leader>C :close<CR>
 nnoremap <leader>x :colder<CR>
+nnoremap <leader>X :cnewer<CR>
 nnoremap n nzz
 nnoremap N Nzz
 nnoremap gd gdzz
