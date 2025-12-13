@@ -87,7 +87,7 @@ vim.diagnostic.config({
   update_in_insert = false,
   severity_sort = true,
   float = {
-    -- <C-w>d to open the window and <C-w>/<C-w>d to move focus to the diagnostic window.
+    -- <C-w>d to open diagnostic window a further <C-w>/<C-w>d to move focus to the diagnostic window.
     focusable = true,
     style = "minimal",
     border = "single",
@@ -106,5 +106,4 @@ vim.diagnostic.config({
 })
 -- See https://neovim.io/doc/user/news-0.11.html for nice update on some new default keys 
 vim.opt.signcolumn = "auto"
--- <C-w>d is defaut open diagnostic float
 vim.keymap.set("n", "<leader>vl", vim.diagnostic.setloclist, { desc = "Set diagnostics to loclist" })
