@@ -30,11 +30,8 @@ augroup numbertoggle
   autocmd! 
   autocmd BufEnter,FocusGained,InsertLeave,WinEnter * if &nu && mode() != "i" | set rnu   | endif 
   autocmd BufLeave,FocusLost,InsertEnter,WinLeave   * if &nu                  | set nornu | endif 
-"  autocmd TermOpen * setlocal nonumber norelativenumber
   if has('nvim')
     autocmd TermOpen * setlocal nonumber norelativenumber
-  else
-    autocmd TerminalOpen * setlocal nonumber norelativenumber
   endif
 augroup END
 augroup MarkdownWrapAndBreak
@@ -45,6 +42,7 @@ augroup END
 autocmd FileType netrw setlocal nospell | setlocal relativenumber 
 let mapleader = " "
 if has('nvim')
+  colorscheme vim
   syntax off " Syntax off to prevent conflict with LSP syntax highlights
 endif
 set guicursor=
