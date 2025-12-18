@@ -30,7 +30,12 @@ augroup numbertoggle
   autocmd! 
   autocmd BufEnter,FocusGained,InsertLeave,WinEnter * if &nu && mode() != "i" | set rnu   | endif 
   autocmd BufLeave,FocusLost,InsertEnter,WinLeave   * if &nu                  | set nornu | endif 
-  autocmd TermOpen * setlocal nonumber norelativenumber
+"  autocmd TermOpen * setlocal nonumber norelativenumber
+  if has('nvim')
+    autocmd TermOpen * setlocal nonumber norelativenumber
+  else
+    autocmd TerminalOpen * setlocal nonumber norelativenumber
+  endif
 augroup END
 augroup MarkdownWrapAndBreak
   autocmd!
@@ -39,7 +44,9 @@ augroup END
 " Below needs reworking but I now think it now works as intended
 autocmd FileType netrw setlocal nospell | setlocal relativenumber 
 let mapleader = " "
-syntax off " Syntax off to prevent conflict with LSP syntax highlights
+if has('nvim')
+  syntax off " Syntax off to prevent conflict with LSP syntax highlights
+endif
 set guicursor=
 set nowrap
 set scrolloff=5
@@ -67,12 +74,18 @@ cabbrev vgp vimgrep
 cabbrev vg vimgrep
 cabbrev rg grep
 cabbrev lrg lgrep
-" Note that since nvim 0.11.0 [q and and ]q move you though copen quickfix list
-" Also [l ]l work similarly for lopen location list
-" Also [b ]b works similarly but for buffer list
+" Note that nvim >= 0.11.0 [q and and ]q move you though copen quickfix list as default keys
 " Also [d ]d works similarly but for diagnistics
+if !has('nvim')
+  nnoremap ]q :cnext<CR>
+  nnoremap [q :cprev<CR>
+  nnoremap ]l :lnext<CR>
+  nnoremap [l :lprev<CR>
+  nnoremap ]b :bnext<CR>
+  nnoremap [b :bprev<CR>
+endif
 nnoremap <leader>c :copen<CR>
-nnoremap <leader>C :close<CR>
+nnoremap <leader>C :cclose<CR>
 nnoremap <leader>x :colder<CR>
 nnoremap <leader>X :cnewer<CR>
 nnoremap n nzz
