@@ -41,6 +41,7 @@ augroup END
 " Below needs reworking but I now think it now works as intended
 autocmd FileType netrw setlocal nospell | setlocal relativenumber 
 let mapleader = " "
+syntax on
 if has('nvim')
   colorscheme vim
   syntax off " Syntax off to prevent conflict with LSP syntax highlights
@@ -53,10 +54,15 @@ set laststatus=2
 set statusline+=%F%{&modified?'[+]':''}%{StatuslineGitBranch()}%=%-14.(%l,%c%V%)
 set colorcolumn=120
 set tabstop=2
-set shiftwidth=2
 set expandtab
+set shiftwidth=2
+set hlsearch
+set incsearch
 let g:netrw_banner = 0
 set splitright
+if exists('&regexpengine')
+  set regexpengine=2
+endif
 set path+=**
 set wildmenu
 set wildignore+=*/node_modules/*,*/.git/*,*/dist/*,*/.next/*,*/.turbo/*,*/target/*,*/coverage/*,*.DS_Store
@@ -81,6 +87,8 @@ if !has('nvim')
   nnoremap [l :lprev<CR>
   nnoremap ]b :bnext<CR>
   nnoremap [b :bprev<CR>
+  highlight QuickFixLine ctermbg=Yellow ctermfg=Black guibg=Yellow guifg=Black
+  set smartindent
 endif
 nnoremap <leader>c :copen<CR>
 nnoremap <leader>C :cclose<CR>
@@ -105,3 +113,48 @@ function! FF(search_term)
   cfirst
 endfunction
 command! -nargs=1 -complete=file FF call FF(<f-args>)
+if !has('nvim')
+  function! s:on_lsp_setup() abort
+    if executable('clangd')
+      call lsp#register_server({
+        \ 'name': 'clangd',
+        \ 'cmd': ['clangd'],
+        \ 'whitelist': ['c', 'cpp', 'objc', 'objcpp','cuda'],
+        \ })
+    endif
+    if executable('typescript-language-server')
+      call lsp#register_server({
+        \ 'name': 'typescript-language-server',
+        \ 'cmd': ['typescript-language-server', '--stdio'],
+        \ 'whitelist': ['typescript', 'javascript', 'typescriptreact', 'javascriptreact'],
+        \ })
+    endif
+  endfunction
+  function! s:on_lsp_buffer_enabled() abort
+    setlocal omnifunc=lsp#complete
+    setlocal signcolumn=auto
+    let g:lsp_diagnostics_signs_hint = {'text': ''}
+    let g:lsp_diagnostics_signs_information = {'text': ''}
+    let g:lsp_diagnostics_enabled = 1
+    if exists('+tagfunc') | setlocal tagfunc=lsp#tagfunc | endif
+    nmap <buffer> gd <plug>(lsp-definition)
+    nmap <buffer> gs <plug>(lsp-document-symbol-search)
+    nmap <buffer> gS <plug>(lsp-workspace-symbol-search)
+    nmap <buffer> grr <plug>(lsp-references)
+    nmap <buffer> gi <plug>(lsp-implementation)
+    nmap <buffer> gt <plug>(lsp-type-definition)
+    nmap <buffer> grn <plug>(lsp-rename)
+    nmap <buffer> ga <plug>(lsp-code-action)
+    nmap <buffer> [d <plug>(lsp-previous-diagnostic)
+    nmap <buffer> ]d <plug>(lsp-next-diagnostic)
+    nmap <buffer> K <plug>(lsp-hover)
+    nnoremap <buffer> <C-w>d :LspDocumentDiagnostics<CR>
+    let g:lsp_preview_float = 1
+    let g:lsp_diagnostics_float_cursor = 1
+  endfunction
+  augroup lsp_install
+    au!
+    autocmd User lsp_setup call s:on_lsp_setup()
+    autocmd User lsp_buffer_enabled call s:on_lsp_buffer_enabled()
+  augroup END
+endif
