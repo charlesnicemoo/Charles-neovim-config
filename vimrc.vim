@@ -60,6 +60,7 @@ set hlsearch
 set incsearch
 let g:netrw_banner = 0
 set splitright
+set splitbelow
 if exists('&regexpengine')
   set regexpengine=2
 endif
@@ -77,6 +78,7 @@ cabbrev vgr vimgrep
 cabbrev vgp vimgrep
 cabbrev vg vimgrep
 cabbrev rg grep
+cabbrev gr grep
 cabbrev lrg lgrep
 " Note that nvim >= 0.11.0 [q and and ]q move you though copen quickfix list as default keys
 " Also [d ]d works similarly but for diagnistics
@@ -89,6 +91,11 @@ if !has('nvim')
   nnoremap [b :bprev<CR>
   highlight QuickFixLine ctermbg=Yellow ctermfg=Black guibg=Yellow guifg=Black
   set smartindent
+  set mouse=a
+  if has('mouse_sgr')
+    set ttymouse=sgr
+  endif
+  highlight VertSplit ctermfg=10 ctermbg=NONE guifg=#585858 guibg=NONE
 endif
 nnoremap <leader>c :copen<CR>
 nnoremap <leader>C :cclose<CR>
@@ -132,10 +139,10 @@ if !has('nvim')
   endfunction
   function! s:on_lsp_buffer_enabled() abort
     setlocal omnifunc=lsp#complete
-    setlocal signcolumn=auto
-    let g:lsp_diagnostics_signs_hint = {'text': ''}
-    let g:lsp_diagnostics_signs_information = {'text': ''}
     let g:lsp_diagnostics_enabled = 1
+    setlocal signcolumn=no
+    let g:lsp_diagnostics_level = 'warning'
+    let g:lsp_diagnostics_virtual_text_enabled = 1
     if exists('+tagfunc') | setlocal tagfunc=lsp#tagfunc | endif
     nmap <buffer> gd <plug>(lsp-definition)
     nmap <buffer> gs <plug>(lsp-document-symbol-search)
