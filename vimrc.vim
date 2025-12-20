@@ -1,5 +1,3 @@
-" This is my old vim config that I cannot be bothered to convert to lua. 
-" It also has the benefit of being more portable to normal vim.
 function! GitDetectBranchAndSetBufferVar()
   let b:git_branch = ''
   if &buftype == 'terminal'
@@ -30,7 +28,7 @@ augroup numbertoggle
   autocmd! 
   autocmd BufEnter,FocusGained,InsertLeave,WinEnter * if &nu && mode() != "i" | set rnu   | endif 
   autocmd BufLeave,FocusLost,InsertEnter,WinLeave   * if &nu                  | set nornu | endif 
-  if has('nvim')
+  if has('nvim') " vim does this by default
     autocmd TermOpen * setlocal nonumber norelativenumber
   endif
 augroup END
@@ -38,7 +36,6 @@ augroup MarkdownWrapAndBreak
   autocmd!
   autocmd FileType markdown,text,tex setlocal wrap linebreak spell
 augroup END
-" Below needs reworking but I now think it now works as intended
 autocmd FileType netrw setlocal nospell | setlocal relativenumber 
 let mapleader = " "
 syntax on
@@ -68,8 +65,7 @@ set path+=**
 set wildmenu
 set wildignore+=*/node_modules/*,*/.git/*,*/dist/*,*/.next/*,*/.turbo/*,*/target/*,*/coverage/*,*.DS_Store
 set grepprg=rg\ -g\ \'!node_modules'\ -g\ \'!.git\'\ -g\ \'!dist/\'\ -g\ \'!.next\'\ -g\ \'!.turbo/\'\ -g\ \'!target\'\ -g\ \'!coverage\'\ --vimgrep\ -uuu\ --no-binary\ --ignore-case
-" If need to really search all stuff (POSIX compliant all dirs) use something like: 
-" find . -type f -print | xargs grep -n "your_search_pattern"
+" If need to really search all stuff (POSIX compliant all dirs) use something like: find . -type f -print | xargs grep -n 'your_search_pattern'
 cabbrev vimgr vimgrep
 cabbrev vmgrp vimgrep
 cabbrev vgrp vimgrep
@@ -80,23 +76,6 @@ cabbrev vg vimgrep
 cabbrev rg grep
 cabbrev gr grep
 cabbrev lrg lgrep
-" Note that nvim >= 0.11.0 [q and and ]q move you though copen quickfix list as default keys
-" Also [d ]d works similarly but for diagnistics
-if !has('nvim')
-  nnoremap ]q :cnext<CR>
-  nnoremap [q :cprev<CR>
-  nnoremap ]l :lnext<CR>
-  nnoremap [l :lprev<CR>
-  nnoremap ]b :bnext<CR>
-  nnoremap [b :bprev<CR>
-  highlight QuickFixLine ctermbg=Yellow ctermfg=Black guibg=Yellow guifg=Black
-  set smartindent
-  set mouse=a
-  if has('mouse_sgr')
-    set ttymouse=sgr
-  endif
-  highlight VertSplit ctermfg=10 ctermbg=NONE guifg=#585858 guibg=NONE
-endif
 nnoremap <leader>c :copen<CR>
 nnoremap <leader>C :cclose<CR>
 nnoremap <leader>x :colder<CR>
@@ -120,7 +99,20 @@ function! FF(search_term)
   cfirst
 endfunction
 command! -nargs=1 -complete=file FF call FF(<f-args>)
-if !has('nvim')
+if !has('nvim') " nvim >= 0.11.0 has these default keys. Also [d ]d works similarly but for diagnistics
+  nnoremap ]q :cnext<CR>
+  nnoremap [q :cprev<CR>
+  nnoremap ]l :lnext<CR>
+  nnoremap [l :lprev<CR>
+  nnoremap ]b :bnext<CR>
+  nnoremap [b :bprev<CR>
+  highlight QuickFixLine ctermbg=Yellow ctermfg=Black guibg=Yellow guifg=Black
+  set smartindent
+  set mouse=a
+  if has('mouse_sgr')
+    set ttymouse=sgr
+  endif
+  highlight VertSplit ctermfg=10 ctermbg=NONE guifg=#585858 guibg=NONE
   function! s:on_lsp_setup() abort
     if executable('clangd')
       call lsp#register_server({
@@ -144,7 +136,7 @@ if !has('nvim')
     let g:lsp_diagnostics_level = 'warning'
     let g:lsp_diagnostics_virtual_text_enabled = 1
     if exists('+tagfunc') | setlocal tagfunc=lsp#tagfunc | endif
-    nmap <buffer> gd <plug>(lsp-definition)
+    nmap <buffer> gd <plug>(lsp-definition) zz
     nmap <buffer> gs <plug>(lsp-document-symbol-search)
     nmap <buffer> gS <plug>(lsp-workspace-symbol-search)
     nmap <buffer> grr <plug>(lsp-references)

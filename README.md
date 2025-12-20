@@ -1,32 +1,22 @@
 # Charles-neovim-config
-This is my neovim configuration (requires 0.11), I have made the configuration custom without any plugins. Requires lua-language-server, Clangd language server, JDTLS language server, and also typescript-language-server.
+This is my vim/neovim(>=0.11.0) configuration.
 
-On Mac you may need run into some confusion with python versions. This can also be fixed using pyenv but I like this more
-python3 -m pip install --user --upgrade pynvim
- - Note: I can't remember why I had this, it may be for an old plugin that I am no longer using. So It may not be required.
+External grep set as rg (ripgrep). If rg is not installed, I highly recommend it. If not possible internal vimgrep is likely sufficient for small-mid size codebases, as wildignore is set up quite nicely to ignore a bunch of useless stuff. For larger codebases vimgrep is perhaps a little slow, so I again recommend trying to install rg.
 
-Please see 0.11 version notes for neovim since I am now using these default keys:
+I have a find files command :FF which is more performant than the internal :find command. This is primarily for larger codebases. Unfortunately, this is not fully portable, as it is only for POSIX like systems, as it leverages the POSIX find command. I may implement some logic for DOS/NT systems later. I believe findstr works on NT, and on DOS there is another find tool, albeit not POSIX compliant.
 
-https://neovim.io/doc/user/news-0.11.html
+I have made the lsp configuration in init.lua custom without any plugins leveraging lua-language-server, Clangd language server, JDTLS language server, and also typescript-language-server. These should all be executable from $PATH.
 
-It states some:
-Mappings:
-grn in Normal mode maps to vim.lsp.buf.rename()
-grr in Normal mode maps to vim.lsp.buf.references()
-gri in Normal mode maps to vim.lsp.buf.implementation()
-gO in Normal mode maps to vim.lsp.buf.document_symbol()
-gra in Normal and Visual mode maps to vim.lsp.buf.code_action()
-CTRL-S in Insert and Select mode maps to vim.lsp.buf.signature_help()
-Mouse popup-menu includes an "Open in web browser" item when you right-click on a URL.
-Mouse popup-menu includes a "Go to definition" item when LSP is active in the buffer.
-Mouse popup-menu includes "Show Diagnostics", "Show All Diagnostics" and "Configure Diagnostics" items when there are diagnostics in the buffer.
-]d-default and [d-default accept a count.
-[D-default and ]D-default jump to the first and last diagnostic in the current buffer, respectively.
-Mappings inspired by Tim Pope's vim-unimpaired:
-[q, ]q, [Q, ]Q, [CTRL-Q, ]CTRL-Q navigate through the quickfix list
-[l, ]l, [L, ]L, [CTRL-L, ]CTRL-L navigate through the location-list
-[t, ]t, [T, ]T, [CTRL-T, ]CTRL-T navigate through the tag-matchlist
-[a, ]a, [A, ]A navigate through the argument-list
-[b, ]b, [B, ]B navigate through the buffer-list
-[<Space>, ]<Space> add an empty line above and below the cursor
-[[ and ]] in Normal mode jump between shell prompts for shells which emit OSC 133 sequences ("shell integration" or "semantic prompts").
+If using regular vim just copying vimrc.vim as ~/.vimrc is likely sufficient.
+
+Base vim lsp is configured with vim-lsp plugin, found at:
+https://github.com/prabirshrestha/vim-lsp
+
+Create the directory structure (the 'vendor' name can be anything you like):
+mkdir -p ~/.vim/pack/vendor/start
+
+Move into that folder:
+cd ~/.vim/pack/vendor/start
+
+Clone vim-lsp:
+git clone https://github.com/prabirshrestha/vim-lsp.git
