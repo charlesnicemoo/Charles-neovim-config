@@ -1,3 +1,4 @@
+autocmd VimEnter * if isdirectory(expand("%:p")) | cd %:p | endif
 function! GitDetectBranchAndSetBufferVar()
   let b:git_branch = ''
   if &buftype == 'terminal'
@@ -126,6 +127,16 @@ if !has('nvim') " nvim >= 0.11.0 has these default keys. Also [d ]d works simila
         \ 'name': 'typescript-language-server',
         \ 'cmd': ['typescript-language-server', '--stdio'],
         \ 'whitelist': ['typescript', 'javascript', 'typescriptreact', 'javascriptreact'],
+        \ })
+    endif
+    if executable('jdtls')
+      call lsp#register_server({
+        \ 'name': 'jdtls',
+        \ 'cmd': {server_info->[
+        \    'jdtls',
+        \    '-data', expand('~/.cache/jdtls-workspace/') . sha256(getcwd())
+        \ ]},
+        \ 'whitelist': ['java'],
         \ })
     endif
   endfunction
