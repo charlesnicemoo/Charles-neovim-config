@@ -101,6 +101,7 @@ function! FF(search_term)
 endfunction
 command! -nargs=1 -complete=file FF call FF(<f-args>)
 if !has('nvim') " nvim >= 0.11.0 has these default keys. Also [d ]d works similarly but for diagnistics
+  set shortmess-=S
   nnoremap ]q :cnext<CR>
   nnoremap [q :cprev<CR>
   nnoremap ]l :lnext<CR>
